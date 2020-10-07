@@ -11,8 +11,6 @@ class TimeSlot < ApplicationRecord
 
 
   def valid_time_slot
-    # binding.pry
-
     if self.end_time.to_time < self.start_time.to_time
       errors.add(:end_time, 'must be greater then start time')
     end

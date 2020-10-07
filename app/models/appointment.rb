@@ -10,7 +10,6 @@ class Appointment < ApplicationRecord
   validate :validate_appointment, if: Proc.new { |a| a.appointment_date? && a.time_slot_id? }
   after_create :send_email_before_apt
 
-  attr_accessor :apt_time
 
   def send_email_before_apt    
     UserMailer.appointment_reminder(self).deliver!
@@ -19,10 +18,6 @@ class Appointment < ApplicationRecord
 
   def when_to_run
     self.appointment_date - 30.minutes
-  end
-
-  def appointment_time
-    "Date: "+self.appointment_date.to_s+" Time: "+self.time_slot.start_time.strftime("%H:%M").to_s+"-"+self.time_slot.end_time.strftime("%H:%M").to_s  
   end
 
   def validate_appointment
